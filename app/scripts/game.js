@@ -25,14 +25,35 @@ Game = (function() {
   }
 
   Game.prototype.start = function() {
-    var interval;
-    interval = 1000 / this.fps;
-    return setInterval((function(_this) {
+    return this.frame((function(_this) {
       return function() {
-        _this.update();
-        return _this.draw();
+        return _this.loop();
       };
-    })(this), interval);
+    })(this));
+  };
+
+  Game.prototype.frame = function(callFrame) {
+    var interval;
+    if (window.requestAnimationFrame) {
+      return requestAnimationFrame((function(_this) {
+        return function() {
+          callFrame();
+          return _this.frame(callFrame);
+        };
+      })(this));
+    } else {
+      interval = 1000 / this.fps;
+      return setInterval((function(_this) {
+        return function() {
+          return callFrame();
+        };
+      })(this), interval);
+    }
+  };
+
+  Game.prototype.loop = function() {
+    this.update();
+    return this.draw();
   };
 
   Game.prototype.update = function() {

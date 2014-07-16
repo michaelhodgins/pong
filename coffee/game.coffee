@@ -17,11 +17,24 @@ class Game
         event.preventDefault()
 
   start: ->
-    interval = 1000 / @fps
-    setInterval =>
-      @update()
-      @draw()
-    , interval
+    @frame =>
+      @loop()
+
+  frame: (callFrame) ->
+    if window.requestAnimationFrame
+      requestAnimationFrame =>
+        callFrame()
+        @frame callFrame
+    else
+      interval = 1000 / @fps
+      setInterval =>
+        callFrame()
+      , interval
+
+
+  loop: ->
+    @update()
+    @draw()
 
   update: ->
     for entity in @entities
