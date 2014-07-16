@@ -59,9 +59,9 @@ Bot = (function(_super) {
   Bot.prototype.update = function() {
     Bot.__super__.update.call(this);
     if (this.y < game.ball.y) {
-      return this.yVelocity = this.speed;
+      return this.yVelocity = Math.min(this.speed, game.ball.y - this.y);
     } else if (this.y > game.ball.y) {
-      return this.yVelocity = -this.speed;
+      return this.yVelocity = Math.max(-this.speed, game.ball.y - this.y);
     }
   };
 

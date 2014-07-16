@@ -39,6 +39,6 @@ class Bot extends Paddle
   update: ->
     super()
     if @y < game.ball.y
-      @yVelocity = @speed
+      @yVelocity = Math.min @speed, game.ball.y - @y
     else if @y > game.ball.y
-      @yVelocity = -@speed
+      @yVelocity = Math.max -@speed, game.ball.y - @y
