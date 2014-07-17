@@ -37,7 +37,7 @@ Game = (function() {
 
   Game.prototype.frame = function(callFrame) {
     var interval;
-    if (window.requestAnimationFrame && false) {
+    if (window.requestAnimationFrame) {
       return window.requestAnimationFrame((function(_this) {
         return function() {
           callFrame();
@@ -62,14 +62,14 @@ Game = (function() {
     return this.recordUpdate();
   };
 
-  Game.prototype.update = function() {
+  Game.prototype.update = function(steps) {
     var entity, _i, _len, _ref, _results;
     _ref = this.entities;
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       entity = _ref[_i];
       if (entity.update) {
-        _results.push(entity.update());
+        _results.push(entity.update(steps));
       } else {
         _results.push(void 0);
       }

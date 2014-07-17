@@ -11,9 +11,9 @@ Entity = (function() {
     this.yVelocity = 0;
   }
 
-  Entity.prototype.update = function() {
-    this.x += this.xVelocity;
-    return this.y += this.yVelocity;
+  Entity.prototype.update = function(steps) {
+    this.x += this.xVelocity * steps;
+    return this.y += this.yVelocity * steps;
   };
 
   Entity.prototype.draw = function(context) {

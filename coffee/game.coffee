@@ -25,7 +25,7 @@ class Game
       @loop()
 
   frame: (callFrame) ->
-    if window.requestAnimationFrame and false
+    if window.requestAnimationFrame
       window.requestAnimationFrame =>
         callFrame()
         @frame callFrame
@@ -40,14 +40,13 @@ class Game
     startTime = new Date().getTime()
     timePassed = startTime - @lastUpdate
     steps = @desiredStep / timePassed
-    #console.log 'timePassed', timePassed, 'steps', steps
     @update steps
     @draw()
     @recordUpdate()
 
-  update: ->
+  update: (steps) ->
     for entity in @entities
-      entity.update() if entity.update
+      entity.update steps if entity.update
 
   draw: ->
     for entity in @entities

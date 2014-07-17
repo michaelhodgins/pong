@@ -7,9 +7,9 @@ class Entity
     @xVelocity = 0
     @yVelocity = 0
 
-  update: ->
-    @x += @xVelocity
-    @y += @yVelocity
+  update: (steps) ->
+    @x += @xVelocity * steps
+    @y += @yVelocity * steps
 
   draw: (context) ->
     context.fillStyle = '#fff'

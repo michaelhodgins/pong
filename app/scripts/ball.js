@@ -15,9 +15,9 @@ Ball = (function(_super) {
     this.reset();
   }
 
-  Ball.prototype.update = function() {
+  Ball.prototype.update = function(steps) {
     var hitter;
-    Ball.__super__.update.call(this);
+    Ball.__super__.update.call(this, steps);
     if (this.y > game.height - this.height || this.y < 0) {
       this.yVelocity *= -1;
     }

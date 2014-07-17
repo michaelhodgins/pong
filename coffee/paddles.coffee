@@ -8,8 +8,8 @@ class Paddle extends Entity
 
     @speed = 15
 
-  update: ->
-    super()
+  update: (steps) ->
+    super steps
     @y = Math.min(Math.max(@y, 0), game.height - @height)
 
 
@@ -19,8 +19,8 @@ class Player extends Paddle
     super()
     @x = 20
 
-  update: ->
-    super()
+  update: (steps) ->
+    super steps
     if game.keyPressed.up
       @yVelocity = -@speed
     else if game.keyPressed.down
@@ -36,8 +36,8 @@ class Bot extends Paddle
     @speed = 5
     @x = game.width - @width - 20
 
-  update: ->
-    super()
+  update: (steps) ->
+    super steps
     if @y < game.ball.y
       @yVelocity = Math.min @speed, game.ball.y - @y
     else if @y > game.ball.y

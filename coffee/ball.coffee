@@ -7,8 +7,8 @@ class Ball extends Entity
     @velocityBounce = 1.05
     @reset()
 
-  update: ->
-    super()
+  update: (steps) ->
+    super steps
     @yVelocity *= -1 if @y > game.height - @height or @y < 0
 
     if @x > game.width
