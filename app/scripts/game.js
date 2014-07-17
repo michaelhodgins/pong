@@ -11,6 +11,8 @@ Game = (function() {
     this.width = this.canvas.width;
     this.height = this.canvas.height;
     this.entities = [];
+    this.desiredStep = 1000 / this.fps;
+    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     this.keyPressed = {};
     $(this.canvas).on('keydown keyup', (function(_this) {
       return function(event) {
@@ -25,6 +27,7 @@ Game = (function() {
   }
 
   Game.prototype.start = function() {
+    this.recordUpdate();
     return this.frame((function(_this) {
       return function() {
         return _this.loop();
@@ -34,8 +37,8 @@ Game = (function() {
 
   Game.prototype.frame = function(callFrame) {
     var interval;
-    if (window.requestAnimationFrame) {
-      return requestAnimationFrame((function(_this) {
+    if (window.requestAnimationFrame && false) {
+      return window.requestAnimationFrame((function(_this) {
         return function() {
           callFrame();
           return _this.frame(callFrame);
@@ -43,17 +46,20 @@ Game = (function() {
       })(this));
     } else {
       interval = 1000 / this.fps;
-      return setInterval((function(_this) {
-        return function() {
-          return callFrame();
-        };
-      })(this), interval);
+      return setInterval(function() {
+        return callFrame();
+      }, interval);
     }
   };
 
   Game.prototype.loop = function() {
-    this.update();
-    return this.draw();
+    var startTime, steps, timePassed;
+    startTime = new Date().getTime();
+    timePassed = startTime - this.lastUpdate;
+    steps = this.desiredStep / timePassed;
+    this.update(steps);
+    this.draw();
+    return this.recordUpdate();
   };
 
   Game.prototype.update = function() {
@@ -84,6 +90,10 @@ Game = (function() {
       }
     }
     return _results;
+  };
+
+  Game.prototype.recordUpdate = function() {
+    return this.lastUpdate = new Date().getTime();
   };
 
   Game.keys = {

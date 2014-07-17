@@ -5,6 +5,9 @@ class Game
     @width = @canvas.width
     @height = @canvas.height
     @entities = []
+    @desiredStep = 1000 / @fps
+
+    window.requestAnimationFrame = window.requestAnimationFrame or window.mozRequestAnimationFrame or window.webkitRequestAnimationFrame or window.msRequestAnimationFrame
 
     # Keep track of key states
     @keyPressed = {}
@@ -17,24 +20,30 @@ class Game
         event.preventDefault()
 
   start: ->
+    @recordUpdate()
     @frame =>
       @loop()
 
   frame: (callFrame) ->
-    if window.requestAnimationFrame
-      requestAnimationFrame =>
+    if window.requestAnimationFrame and false
+      window.requestAnimationFrame =>
         callFrame()
         @frame callFrame
     else
       interval = 1000 / @fps
-      setInterval =>
+      setInterval ->
         callFrame()
       , interval
 
 
   loop: ->
-    @update()
+    startTime = new Date().getTime()
+    timePassed = startTime - @lastUpdate
+    steps = @desiredStep / timePassed
+    #console.log 'timePassed', timePassed, 'steps', steps
+    @update steps
     @draw()
+    @recordUpdate()
 
   update: ->
     for entity in @entities
@@ -43,6 +52,10 @@ class Game
   draw: ->
     for entity in @entities
       entity.draw @context if entity.draw
+
+  recordUpdate: ->
+    @lastUpdate = new Date().getTime()
+
 
   @keys:
     32: 'space'
