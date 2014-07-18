@@ -3,7 +3,7 @@ class Ball extends Entity
     super()
     @width = 20
     @height = 20
-    @velocityShare = 4
+    @velocityShare = 1.5
     @velocityBounce = 0.2
     @velocity = 0
     @vector = 0
@@ -36,11 +36,11 @@ class Ball extends Entity
       @bounce 360
 
     if hitter
-      spin = hitter.yVelocity * 1.5
-      @velocity += 0.2
-      if hitter.yVelocity > 0
+      @velocity += @velocityBounce
+      spin = hitter.yVelocity * @velocityShare
+      if hitter.yVelocity > 1
         @vector -= spin
-      else if hitter.yVelocity < 0
+      else if hitter.yVelocity < 1
         @vector += spin
 
     @yVelocity = @calcYVelocity()

@@ -10,7 +10,7 @@ Ball = (function(_super) {
     Ball.__super__.constructor.call(this);
     this.width = 20;
     this.height = 20;
-    this.velocityShare = 4;
+    this.velocityShare = 1.5;
     this.velocityBounce = 0.2;
     this.velocity = 0;
     this.vector = 0;
@@ -45,11 +45,11 @@ Ball = (function(_super) {
       this.bounce(360);
     }
     if (hitter) {
-      spin = hitter.yVelocity * 1.5;
-      this.velocity += 0.2;
-      if (hitter.yVelocity > 0) {
+      this.velocity += this.velocityBounce;
+      spin = hitter.yVelocity * this.velocityShare;
+      if (hitter.yVelocity > 1) {
         this.vector -= spin;
-      } else if (hitter.yVelocity < 0) {
+      } else if (hitter.yVelocity < 1) {
         this.vector += spin;
       }
     }

@@ -47,10 +47,12 @@ class Game
       entity.update steps if entity.update
 
     if @debug
-      $("#vector").html "Ball Vector: #{@ball.vector}°"
-      $("#velocity").html "Ball Velocity: #{@ball.velocity * @fps} Pixels per second (#{@ball.velocity} per frame)"
-      $("#player-velocity").html "Player Velocity #{@player.yVelocity * @fps} Pixels per second (#{@player.yVelocity} per frame)"
-      $("#bot-velocity").html "Bot Velocity #{@bot.yVelocity * @fps} Pixels per second (#{@bot.yVelocity} per frame)"
+      $("#vector").html "Ball Vector: #{@ball.vector.toFixed 1}°"
+      $("#velocity").html "Ball Velocity: #{(@ball.velocity * @fps).toFixed 1} Pixels per second (#{@ball.velocity.toFixed 1} per frame)"
+      $("#player-velocity").html "Player Velocity #{(@player.yVelocity * @fps).toFixed 1} Pixels per second (#{@player.yVelocity.toFixed 1} per frame)"
+      $("#player-y").html "Player Y: #{@player.y.toFixed 1}"
+      $("#bot-velocity").html "Bot Velocity #{(@bot.yVelocity * @fps).toFixed 1} Pixels per second (#{@bot.yVelocity.toFixed 1} per frame)"
+      $("#bot-y").html "Bot Y: #{@bot.y.toFixed 1}"
 
   draw: ->
     for entity in @entities

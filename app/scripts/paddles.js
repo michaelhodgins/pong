@@ -12,7 +12,7 @@ Paddle = (function(_super) {
     this.height = 100;
     this.y = game.height / 2 - this.height / 2;
     this.score = 0;
-    this.speed = 15;
+    this.speed = 14;
   }
 
   Paddle.prototype.update = function(steps) {
@@ -34,9 +34,11 @@ Player = (function(_super) {
 
   Player.prototype.update = function(steps) {
     Player.__super__.update.call(this, steps);
-    if (game.keyPressed.up) {
+    if (game.keyPressed.up && game.keyPressed.down) {
+      return this.yVelocity = 0;
+    } else if (game.keyPressed.up && this.y > 0) {
       return this.yVelocity = -this.speed;
-    } else if (game.keyPressed.down) {
+    } else if (game.keyPressed.down && this.y < game.height - this.height) {
       return this.yVelocity = this.speed;
     } else {
       return this.yVelocity = 0;
@@ -58,10 +60,12 @@ Bot = (function(_super) {
 
   Bot.prototype.update = function(steps) {
     Bot.__super__.update.call(this, steps);
-    if (this.y < game.ball.y) {
+    if (this.y + (this.height / 2) < game.ball.y && this.y < (game.height - this.height)) {
       return this.yVelocity = Math.min(this.speed, game.ball.y - this.y);
-    } else if (this.y > game.ball.y) {
+    } else if (this.y + (this.height / 2) > game.ball.y && this.y > 0) {
       return this.yVelocity = Math.max(-this.speed, game.ball.y - this.y);
+    } else {
+      return this.yVelocity = 0;
     }
   };
 

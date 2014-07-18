@@ -12,7 +12,7 @@ Game = (function() {
     this.height = this.canvas.height;
     this.entities = [];
     this.desiredStep = 1000 / this.fps;
-    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+    this.debug = false;
     this.keyPressed = {};
     $(this.canvas).on('keydown keyup', (function(_this) {
       return function(event) {
@@ -63,18 +63,22 @@ Game = (function() {
   };
 
   Game.prototype.update = function(steps) {
-    var entity, _i, _len, _ref, _results;
+    var entity, _i, _len, _ref;
     _ref = this.entities;
-    _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       entity = _ref[_i];
       if (entity.update) {
-        _results.push(entity.update(steps));
-      } else {
-        _results.push(void 0);
+        entity.update(steps);
       }
     }
-    return _results;
+    if (this.debug) {
+      $("#vector").html("Ball Vector: " + (this.ball.vector.toFixed(1)) + "°");
+      $("#velocity").html("Ball Velocity: " + ((this.ball.velocity * this.fps).toFixed(1)) + " Pixels per second (" + (this.ball.velocity.toFixed(1)) + " per frame)");
+      $("#player-velocity").html("Player Velocity " + ((this.player.yVelocity * this.fps).toFixed(1)) + " Pixels per second (" + (this.player.yVelocity.toFixed(1)) + " per frame)");
+      $("#player-y").html("Player Y: " + (this.player.y.toFixed(1)));
+      $("#bot-velocity").html("Bot Velocity " + ((this.bot.yVelocity * this.fps).toFixed(1)) + " Pixels per second (" + (this.bot.yVelocity.toFixed(1)) + " per frame)");
+      return $("#bot-y").html("Bot Y: " + (this.bot.y.toFixed(1)));
+    }
   };
 
   Game.prototype.draw = function() {
