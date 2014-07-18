@@ -5,6 +5,8 @@ class Ball extends Entity
     @height = 20
     @velocityShare = 4
     @velocityBounce = 1.05
+    @velocity = 0
+    @vector = 0
     @reset()
 
   update: (steps) ->
@@ -30,6 +32,11 @@ class Ball extends Entity
         @yVelocity += hitter.yVelocity / @velocityShare
 
 
+  calcYVelocity: ->
+    @velocity * Math.sin @degreesToRadians(@vector)
+
+  calcXVelocity: ->
+    @velocity * Math.cos @degreesToRadians(@vector)
 
 
   reset: ->
@@ -38,8 +45,14 @@ class Ball extends Entity
 
     minVelocity = -5
     maxVelocity = 5
-    randYVelocity = Math.floor Math.random() * (maxVelocity - minVelocity + 1) + minVelocity
+    randVelocity = if Math.random() > 0.5 then maxVelocity else  minVelocity
 
-    @yVelocity = randYVelocity
-    @xVelocity = if Math.random() > 0.5 then maxVelocity else minVelocity
+    minVector = -25
+    maxVector = 25
+    randVector = Math.floor Math.random() * (maxVector - minVector + 1) + minVector
 
+    @velocity = randVelocity
+    @vector = randVector
+
+    @yVelocity = @calcYVelocity()
+    @xVelocity = @calcXVelocity()

@@ -25,6 +25,14 @@ Entity = (function() {
     return this.y + this.height > other.y && this.y < other.y + other.height && this.x + this.width > other.x && this.x < other.x + other.width;
   };
 
+  Entity.prototype.degreesToRadians = function(degrees) {
+    return degrees * Math.PI / 180;
+  };
+
+  Entity.prototype.radiansToDegrees = function(radians) {
+    return radians * 180 / Math.PI;
+  };
+
   return Entity;
 
 })();

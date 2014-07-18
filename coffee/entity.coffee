@@ -17,3 +17,9 @@ class Entity
 
   intersect: (other) ->
     @y + @height > other.y and @y < other.y + other.height and @x + @width > other.x and @x < other.x + other.width
+
+  degreesToRadians: (degrees) ->
+    degrees * Math.PI / 180
+
+  radiansToDegrees: (radians) ->
+    radians * 180 / Math.PI

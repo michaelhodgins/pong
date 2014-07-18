@@ -12,6 +12,8 @@ Ball = (function(_super) {
     this.height = 20;
     this.velocityShare = 4;
     this.velocityBounce = 1.05;
+    this.velocity = 0;
+    this.vector = 0;
     this.reset();
   }
 
@@ -43,15 +45,28 @@ Ball = (function(_super) {
     }
   };
 
+  Ball.prototype.calcYVelocity = function() {
+    return this.velocity * Math.sin(this.degreesToRadians(this.vector));
+  };
+
+  Ball.prototype.calcXVelocity = function() {
+    return this.velocity * Math.cos(this.degreesToRadians(this.vector));
+  };
+
   Ball.prototype.reset = function() {
-    var maxVelocity, minVelocity, randYVelocity;
+    var maxVector, maxVelocity, minVector, minVelocity, randVector, randVelocity;
     this.x = game.width / 2 - this.width;
     this.y = game.height / 2 - this.height;
     minVelocity = -5;
     maxVelocity = 5;
-    randYVelocity = Math.floor(Math.random() * (maxVelocity - minVelocity + 1) + minVelocity);
-    this.yVelocity = randYVelocity;
-    return this.xVelocity = Math.random() > 0.5 ? maxVelocity : minVelocity;
+    randVelocity = Math.random() > 0.5 ? maxVelocity : minVelocity;
+    minVector = -25;
+    maxVector = 25;
+    randVector = Math.floor(Math.random() * (maxVector - minVector + 1) + minVector);
+    this.velocity = randVelocity;
+    this.vector = randVector;
+    this.yVelocity = this.calcYVelocity();
+    return this.xVelocity = this.calcXVelocity();
   };
 
   return Ball;
