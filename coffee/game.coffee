@@ -6,10 +6,8 @@ class Game
     @height = @canvas.height
     @entities = []
     @desiredStep = 1000 / @fps
+    @debug = false
 
-    window.requestAnimationFrame = window.requestAnimationFrame or window.mozRequestAnimationFrame or window.webkitRequestAnimationFrame or window.msRequestAnimationFrame
-
-    # Keep track of key states
     @keyPressed = {}
 
     $(@canvas).on 'keydown keyup', (event) =>
@@ -47,6 +45,12 @@ class Game
   update: (steps) ->
     for entity in @entities
       entity.update steps if entity.update
+
+    if @debug
+      $("#vector").html "Ball Vector: #{@ball.vector}°"
+      $("#velocity").html "Ball Velocity: #{@ball.velocity * @fps} Pixels per second (#{@ball.velocity} per frame)"
+      $("#player-velocity").html "Player Velocity #{@player.yVelocity * @fps} Pixels per second (#{@player.yVelocity} per frame)"
+      $("#bot-velocity").html "Bot Velocity #{@bot.yVelocity * @fps} Pixels per second (#{@bot.yVelocity} per frame)"
 
   draw: ->
     for entity in @entities
