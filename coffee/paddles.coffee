@@ -68,10 +68,10 @@ class Bot extends Paddle
   update: (steps) ->
     super steps
     #if the bot is above the ball, move down, but only if the paddle isn't already at the bottom
-    if @y + (@height / 2) < game.ball.y and @y < (game.height - @height)
+    if @y < game.ball.y and @y < (game.height - @height)
       @yVelocity = Math.min @speed, game.ball.y - @y
     # if the bot is below the ball move up, but only if the paddle isn't already at the top
-    else if @y + (@height / 2) > game.ball.y and @y > 0
+    else if @y + @height > game.ball.y and @y > 0
       @yVelocity = Math.max -@speed, game.ball.y - @y
     else
       @yVelocity = 0

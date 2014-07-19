@@ -95,9 +95,9 @@ Ball = (function(_super) {
    */
 
   Ball.prototype.correctParallels = function() {
-    if (this.vector > 265 && this.vector <= 270 || this.vector > 85 && this.vector <= 90) {
+    if (this.vector > 260 && this.vector <= 270 || this.vector > 80 && this.vector <= 90) {
       return this.vector -= 1;
-    } else if (this.vector > 270 && this.vector <= 275 || this.vector > 90 && this.vector <= 95) {
+    } else if (this.vector > 270 && this.vector <= 280 || this.vector > 90 && this.vector <= 100) {
       return this.vector += 1;
     }
   };

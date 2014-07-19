@@ -89,9 +89,9 @@ class Ball extends Entity
   Stop the ball getting stuck moving in vertical lines
   ###
   correctParallels: ->
-    if @vector > 265 and @vector <= 270 or @vector > 85 and @vector <= 90
+    if @vector > 260 and @vector <= 270 or @vector > 80 and @vector <= 90
       @vector -= 1
-    else if @vector > 270 and @vector <= 275 or @vector > 90 and @vector <= 95
+    else if @vector > 270 and @vector <= 280 or @vector > 90 and @vector <= 100
       @vector += 1
 
   ###
