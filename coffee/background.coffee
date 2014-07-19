@@ -1,3 +1,6 @@
+###
+Draws the background of the game, including the score board.
+###
 class Background
   draw: (context) ->
     context.fillStyle = '#000'
